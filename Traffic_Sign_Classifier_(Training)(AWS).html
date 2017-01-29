@@ -16587,22 +16587,6 @@ Validation Accuracy = 0.994
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The samples in train.p is not in uniform distribution. Some labels have more then 2000 samples, some labels have only ~200 samples. If we perform training on these biased data, our network will be biased too.</p>
-<p>Let say there are only two labels in our dataset, and we have 900 samples for label <em>A</em>, 100 label for label <em>B</em>. If our network always claimed that all the training data are in label <em>A</em>, then it will reach 90% accuracy. However, in reality, our model knows nothing about label <em>B</em>, and it is not reliable at all.</p>
-<p>In order to solve this issue. I generate new samples by duplicating given training data, such that all labels have the same number of samples.</p>
-<p>Although we have uniform distributed training data, the same sample may exist in the dataset muliple times, which is not good too. The network trained with these repeated samples maybe overfitted.</p>
-<p>For example, if we teach our network the meaning of a human with only one image, then our network may think that a football always look exact the same as the one it saw in the image, and any human being taller or shorter then the one in the image may not be classified as <em>human</em>.</p>
-<p>We can solve this problem by adjusting sample images. Affine transformation is the one and only one way I choose. I transform all the sampe images I have randomly. There should be no  two images be the same, or the duplicated samples could not affect overall network accuracy.</p>
-<p>There are many still many other way to adjust the images, such as changing the brightness of images, however, I didn't do so, because my network reach ~0.95 test accuracy without adjusting the brightness.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Question-2">Question 2<a class="anchor-link" href="#Question-2">&#182;</a></h3><p><em>Describe how you set up the training, validation and testing data for your model. <strong>Optional</strong>: If you generated additional data, how did you generate the data? Why did you generate the data? What are the differences in the new dataset (with generated data) from the original dataset?</em></p>
 
 </div>
@@ -16614,17 +16598,6 @@ Validation Accuracy = 0.994
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I created training set and validation set from preprocessed training data. 1/5 of training set are selected to be validation set. The selection is in random.</p>
-<p>Test set are from the given test data. No processing are done on these test data.</p>
 
 </div>
 </div>
@@ -16654,18 +16627,6 @@ Validation Accuracy = 0.994
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>My network is based on the convolution neural network, LeNet, provided in LeNet Lab. Because traffic signs looks more complicated then the handwritings, so I increase the size of each layer.</p>
-<p>My network has two convolution layers and three fully connected layers. The details of each layer can be found in the comment of the LeNet implementation.</p>
-<p>Besides the difference in the layer size, I did add a dropout at the output of flattened results. Adding a dropout can minimise the overfitting.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Question-4">Question 4<a class="anchor-link" href="#Question-4">&#182;</a></h3><p><em>How did you train your model? (Type of optimizer, batch size, epochs, hyperparameters, etc.)</em></p>
 
 </div>
@@ -16681,18 +16642,7 @@ Validation Accuracy = 0.994
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I have increased the batch size of the network. Because we have a powerful machine, which can handle more then 200 sample in a batch, for training, so we can use a higher batch number.</p>
-<p>On the other hand, each epoch can be finished in a shorter time, we can increse the number of epochs too.</p>
-<p>AdamOptimizer looks working well in our network, so I didn't change it.</p>
 
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -16709,22 +16659,6 @@ Validation Accuracy = 0.994
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Wothout changing any parameter of LeNet, the accuracy is ~0.9</p>
-<p>At the begining, I did muliple the size of each layer by 10, and I found out that the accuracy is lower then without modifying any parameter in LeNet. I though my network is overfitting, so I tried use a smaller learning rate, but no help.</p>
-<p>Then I try use a smaller muliplier, and the accuracy became better and better. Finally it reach training accuracy ~0.97 and test accuracy ~0.92.</p>
-<p>The diff between them should be related to overfitting, so I applied dropout.</p>
-<p>First I tried adding drop out to all fully connected layer. The accuracy suddenly dropped to 0.02, which means my network is almost use guessing to determine the label.</p>
-<p>I noticed that I may drop too much from the layer, so I reduce the number of dropout layer and increse the keep properties.</p>
-<p>Finally my network reaches ~0.99 training accuracy and ~0.95 test accuracy.</p>
 
 </div>
 </div>
