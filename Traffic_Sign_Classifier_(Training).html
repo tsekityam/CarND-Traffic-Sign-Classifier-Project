@@ -20056,7 +20056,7 @@ QmCC
     <span class="c1"># Pooling. Input = 28x28x15. Output = 14x14x15.</span>
     <span class="n">conv1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span>
 
-    <span class="c1"># Layer 2: Convolutional. Input = 14x14x25. Output = 10x10x25.</span>
+    <span class="c1"># Layer 2: Convolutional. Input = 14x14x15. Output = 10x10x25.</span>
     <span class="n">conv2_W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">mu</span><span class="p">,</span> <span class="n">stddev</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;conv2_W&quot;</span><span class="p">)</span>
     <span class="n">conv2_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;conv2_b&quot;</span><span class="p">)</span>
     <span class="n">conv2</span>   <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="n">conv2_W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">conv2_b</span>
@@ -20147,7 +20147,40 @@ QmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My network is based on the convolution neural network, LeNet, provided in LeNet Lab. Because traffic signs looks more complicated then the handwritings, so I increase the size of each layer.</p>
-<p>My network has two convolution layers and three fully connected layers. The details of each layer can be found in the comment of the LeNet implementation.</p>
+<p>My network has two convolution layers and three fully connected layers. The details of each layer can be found in below.</p>
+<hr>
+<p>Shape: 32x32x32_</p>
+<h3 id="layer-1,-convolutional">layer 1, convolutional<a class="anchor-link" href="#layer-1,-convolutional">&#182;</a></h3><h5 id="convolution">convolution<a class="anchor-link" href="#convolution">&#182;</a></h5><ul>
+<li>filter shape: (5, 5, 3, 15), strides: [1, 1, 1, 1], with valid padding</li>
+</ul>
+<h4 id="relu">relu<a class="anchor-link" href="#relu">&#182;</a></h4><p><em>Shape: 28x28x15</em></p>
+<h4 id="max-pool">max pool<a class="anchor-link" href="#max-pool">&#182;</a></h4><ul>
+<li>kernel: [1, 2, 2, 1], strides: [1, 2, 2, 1], with valid padding</li>
+</ul>
+<p><em>Shape: 14x14x15</em></p>
+<h3 id="layer-2,-convolutional">layer 2, convolutional<a class="anchor-link" href="#layer-2,-convolutional">&#182;</a></h3><h5 id="convolution">convolution<a class="anchor-link" href="#convolution">&#182;</a></h5><ul>
+<li>filter shape: (5, 5, 15, 25), strides: [1, 1, 1, 1], with valid padding</li>
+</ul>
+<h4 id="relu">relu<a class="anchor-link" href="#relu">&#182;</a></h4><p><em>Shape: 28x28x15</em></p>
+<h4 id="max-pool">max pool<a class="anchor-link" href="#max-pool">&#182;</a></h4><ul>
+<li>kernel: [1, 2, 2, 1], strides: [1, 2, 2, 1], with valid padding</li>
+</ul>
+<p><em>Shape: 5x5x25</em></p>
+<h4 id="flatten">flatten<a class="anchor-link" href="#flatten">&#182;</a></h4><p><em>Node: 625</em></p>
+<h4 id="drop-out">drop out<a class="anchor-link" href="#drop-out">&#182;</a></h4><ul>
+<li>keep probability: 0.75(training) or 1.0(testing)</li>
+</ul>
+<p><em>Node: 625</em></p>
+<h3 id="Layer-3,-fully-connected">Layer 3, fully connected<a class="anchor-link" href="#Layer-3,-fully-connected">&#182;</a></h3><h4 id="relu">relu<a class="anchor-link" href="#relu">&#182;</a></h4><h4 id="drop-out">drop out<a class="anchor-link" href="#drop-out">&#182;</a></h4><ul>
+<li>keep probability: 0.75(training) or 1.0(testing)</li>
+</ul>
+<p><em>Node: 150</em></p>
+<h3 id="Layer-4,-fully-connected">Layer 4, fully connected<a class="anchor-link" href="#Layer-4,-fully-connected">&#182;</a></h3><h4 id="relu">relu<a class="anchor-link" href="#relu">&#182;</a></h4><h4 id="drop-out">drop out<a class="anchor-link" href="#drop-out">&#182;</a></h4><ul>
+<li>keep probability: 0.75(training) or 1.0(testing)</li>
+</ul>
+<p><em>Node: 100</em></p>
+<h3 id="Layer-5,-fully-connected">Layer 5, fully connected<a class="anchor-link" href="#Layer-5,-fully-connected">&#182;</a></h3><p><em>Node: 43</em></p>
+<hr>
 <p>Besides the difference in the layer size, I did add a dropout at the first two fully connected layer. Adding dropout helps reduce the rate of overfitting. I didn't add the dropout to the last fully connected layer, because the properties available on the layer is just 100. Both of them may be an important feature and dropping anyone of them may lead to model to underfitting.</p>
 
 </div>
@@ -20201,31 +20234,31 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
-    <span class="n">num_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># with tf.Session() as sess:</span>
+<span class="c1">#     sess.run(tf.global_variables_initializer())</span>
+<span class="c1">#     num_examples = len(X_train)</span>
     
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
-        <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">BATCH_SIZE</span><span class="p">):</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">BATCH_SIZE</span>
-            <span class="n">batch_x</span><span class="p">,</span> <span class="n">batch_y</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">end</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
-            <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">training_operation</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">batch_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">batch_y</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">})</span>
+<span class="c1">#     print(&quot;Training...&quot;)</span>
+<span class="c1">#     print()</span>
+<span class="c1">#     for i in range(EPOCHS):</span>
+<span class="c1">#         X_train, y_train = shuffle(X_train, y_train, random_state=0)</span>
+<span class="c1">#         for offset in range(0, num_examples, BATCH_SIZE):</span>
+<span class="c1">#             end = offset + BATCH_SIZE</span>
+<span class="c1">#             batch_x, batch_y = X_train[offset:end], y_train[offset:end]</span>
+<span class="c1">#             sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 0.75})</span>
             
-        <span class="n">training_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-        <span class="n">validation_accuracy</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EPOCH </span><span class="si">{}</span><span class="s2"> ...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">training_accuracy</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validation Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">validation_accuracy</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">()</span>
+<span class="c1">#         training_accuracy = evaluate(X_train, y_train)</span>
+<span class="c1">#         validation_accuracy = evaluate(X_validation, y_validation)</span>
+<span class="c1">#         print(&quot;EPOCH {} ...&quot;.format(i+1))</span>
+<span class="c1">#         print(&quot;Training Accuracy = {:.3f}&quot;.format(training_accuracy))</span>
+<span class="c1">#         print(&quot;Validation Accuracy = {:.3f}&quot;.format(validation_accuracy))</span>
+<span class="c1">#         print()</span>
         
-    <span class="c1"># Save the model</span>
-    <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">save_file</span><span class="p">)</span>
+<span class="c1">#     # Save the model</span>
+<span class="c1">#     saver.save(sess, save_file)</span>
 </pre></div>
 
 </div>
@@ -20235,7 +20268,7 @@ QmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
@@ -21354,7 +21387,7 @@ A/ydDhJAlfNCAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
@@ -22178,13 +22211,18 @@ AAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My network can identifiy the first three images I provoided. However, it failed to detect the sign in the last two images. So the over all accuracy of my network on these new image is only 60%.</p>
+<p>However, the test accuracy of the original test set is as high as 96%.</p>
+<p>The different between two value can be related to the new test data size or the overfitting</p>
+<p>Because there are 5 images in new test set, so any misclassification may lead to a huge drop in accuracy.</p>
+<p>On the other hand, overfitting may cause huge difference between the value.</p>
+<p>If there is no overfitting, then the posibilty that two images be misclassified is 0.05*0.05 = 0.0025, which is almost impossible, so I believed my network is overfitting</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Visualize the softmax probabilities here.</span>
@@ -22198,7 +22236,7 @@ AAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_k_prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">top_k</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">),</span> <span class="n">n_classes</span><span class="p">)</span> 
@@ -22216,7 +22254,7 @@ AAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
